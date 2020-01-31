@@ -1,9 +1,14 @@
 import React from 'react';
 import axios from 'axios';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import SearchResults from './SearchResults';
+import './Search.css';
 
 class APISearch extends React.Component {
     state = {
         foodSearch : '',
+        searchResults : null,
     }
 
     constructor(props){
@@ -32,6 +37,8 @@ class APISearch extends React.Component {
         axios.get(reqURL, headers)
             .then(res => {
                 console.log("HERE IS THE RES ", res);
+                // set the state to the returned hits from the api
+                this.setState({searchResults : res.data.hits});
             })
             .catch(err => {
                 console.log("THERE WAS AN ERROR ", err);
@@ -40,16 +47,19 @@ class APISearch extends React.Component {
 
     changeInput = (e) => {
         // change the value in the state for the input
+        console.log("GONNA CHANGE THE STATE");
         this.setState({ [e.target.name] : e.target.value });
+        console.log(this.state);
     }
 
-    render(){
+    render() {
         return(
             <div>
-                <form onSubmit={this.submit}>
-                    <input type="text" placeholder="Enter Food Item" name="foodSearch" value={this.state.foodSearch} onChange={this.changeInput} />
-                    <button type="submit">Search</button>
+                <form onSubmit={this.submit} className="search-form-container">
+                    <TextField id="outlined-basic" variant="outlined" type="text" label="Search Food Item" name="foodSearch" value={this.state.foodSearch} onChange={this.changeInput} />
+                    <Button type="submit" variant="outlined" color="primary">Primary</Button>
                 </form>
+                <SearchResults searchResults={this.state.searchResults} />
             </div>
         )
     }
