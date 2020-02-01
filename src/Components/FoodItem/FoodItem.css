@@ -1,0 +1,46 @@
+.nutrition-body {
+    padding : 0px 16px;
+}
+
+.nutrition-info-cont {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 0px;
+    border-bottom: 1px solid grey;
+}
+
+.nutrition-header {
+    padding-top: 16px;
+    font-weight: bold;
+    font-size : 1.5em;
+    text-align: center;
+}
+
+.food-item-header {
+    border-bottom: 2px solid grey;
+    padding: 16px 0px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.servings-counter {
+    margin-top: 20px;
+    text-align: left;
+}
+
+@media(max-width : 690px) {
+    .servings-counter {
+        text-align: center;
+    }
+}
+
+.MuiInputBase-input{
+    padding:0px;
+}
+
+.MuiOutlinedInput-input{
+    padding:10px !important;
+    text-align: center;
+    width: 140px;
+}

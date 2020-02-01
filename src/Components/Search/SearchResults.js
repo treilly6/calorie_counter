@@ -14,18 +14,6 @@ export default function SearchResults({ searchResults }) {
 
     const [redirect, setRedirect] = useState(false);
 
-    // // funciton for navigating to the item page component
-    // const navToItemPage = (foodItemData) => {
-    //     console.log("In navToItemPage function ", foodItemData);
-    //     <Redirect to={{
-    //         pathname : "/item",
-    //         state : {
-    //             foodItem : foodItemData,
-    //         }
-    //     }} />
-    //
-    // }
-
     var resultNames = null;
 
     if(searchResults) {
