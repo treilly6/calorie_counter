@@ -6,7 +6,7 @@ import MealTable from './MealTypes/MealTable';
 export default function JournalHome() {
 
     // i want to figure out how to get the intial calandar date from the Calandar input on first render
-    const [journalDate, setJournalDate] = useState(null);
+    const [journalDate, setJournalDate] = useState(new Date());
 
     const getDate = (date) => {
         console.log("HERE IS THE DATE IN THE JOURNAL HOME ", date);

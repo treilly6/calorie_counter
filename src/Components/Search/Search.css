@@ -2,3 +2,37 @@
     display: grid;
     grid-template-columns: 80% 20%;
 }
+
+.api-search-main-cont {
+    background-color: #fff;
+    margin : 10px;
+    padding: 10px;
+}
+
+.search-results-row:hover {
+    background-color: #d9d9d9;
+}
+
+.search-results-row {
+    cursor: pointer;
+}
+
+.table-link-container {
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+
+}
+
+.link-span {
+    padding-left: 16px;
+}
+
+.food-item-link {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width : 100%;
+}

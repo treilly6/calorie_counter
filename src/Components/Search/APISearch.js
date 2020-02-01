@@ -57,7 +57,7 @@ class APISearch extends React.Component {
 
     render() {
         return(
-            <div>
+            <div className="api-search-main-cont">
                 <form onSubmit={this.submit} className="search-form-container">
                     <TextField id="outlined-basic" variant="outlined" type="text" label="Search Food Item" name="foodSearch" value={this.state.foodSearch} onChange={this.changeInput} />
                     <Button type="submit" variant="outlined" color="primary">Primary</Button>
