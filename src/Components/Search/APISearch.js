@@ -13,10 +13,13 @@ class APISearch extends React.Component {
 
     constructor(props){
         super(props);
+        console.log("COMPONENT PROSPS ");
+        console.log(props);
     }
 
     componentDidMount(){
         console.log("api search is mounting");
+
     }
 
     submit = (e) => {
