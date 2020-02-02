@@ -65,7 +65,7 @@ export default function FoodItem(props) {
         )
     } else {
         return (
-            <Paper elevation={3} style={{marginTop : "15px"}}>
+            <Paper elevation={3}>
                 <div className="food-item-header">
                     <div style={{padding:"0px 5px"}}>{foodData.fields.item_name}</div>
                 </div>

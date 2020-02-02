@@ -5,6 +5,7 @@ import JournalHome from './Components/MealJournal/JournalHome';
 import APISearch from './Components/Search/APISearch';
 import FoodItem from './Components/FoodItem/FoodItem';
 import Header from './Components/Header/Header';
+import Footer from './Components/Footer/Footer';
 import Paper from '@material-ui/core/Paper';
 import LandingPage from './Components/HomePage/LandingPage';
 
@@ -21,6 +22,7 @@ function App() {
                       <Route exact path="/item" component={FoodItem} />
                   </div>
               </Paper>
+              <Footer />
           </div>
       </Router>
 
