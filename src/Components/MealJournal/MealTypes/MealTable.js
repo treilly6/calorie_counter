@@ -10,9 +10,11 @@ import AddFood from './AddFood';
 import './MealTypes.css';
 import { Link } from 'react-router-dom';
 
-export default function MealTable({ mealType, mealDate }) {
-    // foodData param is the food eaten by the user
+export default function MealTable({ mealType, journalDate }) {
     // mealType specifies if meal was breakfast, lunch, dinner, or snacks
+    // journalDate specifies the date user selected on journalHome.js
+
+    console.log("HERE IS THE MEALTYPE AND THE DATE IN THE MEAL TABLE JS ", mealType, journalDate);
 
     const foodData = [
         {
@@ -63,7 +65,7 @@ export default function MealTable({ mealType, mealDate }) {
                         pathname : "/search",
                         state : {
                             mealType : mealType,
-                            mealDate : mealDate,
+                            journalDate : journalDate,
                         }
 
                     }}>
@@ -85,7 +87,7 @@ export default function MealTable({ mealType, mealDate }) {
                         pathname : "/search",
                         state : {
                             mealType : mealType,
-                            mealDate : mealDate,
+                            journalDate : journalDate,
                         }
                 }}>
                     <AddFood />

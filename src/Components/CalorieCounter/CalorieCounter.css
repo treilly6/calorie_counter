@@ -1,0 +1,23 @@
+.calorie-counter-calc-cont {
+    display: flex;
+    /* justify-content: space-evenly; */
+    justify-content: space-between;
+}
+
+.calorie-counter-cont {
+    width: 100%;
+    max-width: 420px;
+    margin : 0 auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding : 10px 25px;
+}
+
+.calorie-cont {
+    text-align: center;
+}
+
+.calorie-counter-header {
+    padding-bottom: 10px;
+    font-weight: bold;
+}

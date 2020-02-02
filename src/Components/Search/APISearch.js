@@ -62,7 +62,7 @@ class APISearch extends React.Component {
                     <TextField id="outlined-basic" variant="outlined" type="text" label="Search Food Item" name="foodSearch" value={this.state.foodSearch} onChange={this.changeInput} />
                     <Button type="submit" variant="outlined" color="primary">Search</Button>
                 </form>
-                <SearchResults searchResults={this.state.searchResults} />
+                <SearchResults searchResults={this.state.searchResults} journalDate={this.props.location.state.journalDate} />
             </div>
         )
     }

@@ -2,25 +2,36 @@ import React, {useEffect, useState} from 'react';
 import CalendarInput from '../Calendar/CalendarInput';
 import APISearch from '../Search/APISearch';
 import MealTable from './MealTypes/MealTable';
+import CalorieCounter from '../CalorieCounter/CalorieCounter';
 
-export default function JournalHome() {
+export default function JournalHome(props) {
 
-    // i want to figure out how to get the intial calandar date from the Calandar input on first render
-    const [journalDate, setJournalDate] = useState(new Date());
+    console.log("HERE THE JOURNAL HOME PROPS ", props);
+
+    // props.location.state will have a redirectDate value when a user saves
+    // meal data on the FoodItem.js page and it redirects back to the journalHome
+    // this will maintain a consistency with the date so users could add multiple meal items
+    // for the same date relatively quickly
+    // If there is not redirectDate value then set the dateObj to the current date
+    const dateObj = (props.location.state && props.location.state.redirectDate ? new Date(props.location.state.redirectDate) : new Date())
+
+    const [journalDate, setJournalDate] = useState(dateObj);
 
     const getDate = (date) => {
         console.log("HERE IS THE DATE IN THE JOURNAL HOME ", date);
         setJournalDate(date);
+
+        // want an api call when the date changes to get the proper data for that days meals and calories
     }
 
     return (
-        <div>
-            <h1>JOURNAL HOME</h1>
-            <CalendarInput sendDateToParent={getDate}/>
-            <MealTable mealDate={journalDate} mealType="Breakfast" />
-            <MealTable mealDate={journalDate} mealType="Lunch"/>
-            <MealTable mealDate={journalDate} mealType="Dinner"/>
-            <MealTable mealDate={journalDate} mealType="Snacks"/>
+        <div style={{paddingTop : "15px"}}>
+            <CalendarInput sendDateToParent={getDate} journalDate={journalDate} />
+            <CalorieCounter />
+            <MealTable journalDate={journalDate} mealType="Breakfast" />
+            <MealTable journalDate={journalDate} mealType="Lunch"/>
+            <MealTable journalDate={journalDate} mealType="Dinner"/>
+            <MealTable journalDate={journalDate} mealType="Snacks"/>
         </div>
     )
 }

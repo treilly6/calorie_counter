@@ -38,3 +38,11 @@
     text-decoration: none;
     color:#000;
 }
+
+.search-input {
+    padding : 100px !important;
+}
+
+.tester {
+    padding : 100px;
+}
