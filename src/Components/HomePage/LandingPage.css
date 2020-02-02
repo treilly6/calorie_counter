@@ -2,4 +2,35 @@
     display: flex;
     justify-content: center;
     overflow-x: hidden;
+    position: relative;
+}
+
+.img-lp {
+    max-width: 1500px;
+}
+
+.signup-modal {
+    position: absolute;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    color : #ff8c1a;
+    text-align: center;
+    z-index: 3;
+}
+
+.signup-text {
+    font-size: 2em;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.shader {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
 }
