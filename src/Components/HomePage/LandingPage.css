@@ -1,0 +1,5 @@
+.lp-main-photo {
+    display: flex;
+    justify-content: center;
+    overflow-x: hidden;
+}
