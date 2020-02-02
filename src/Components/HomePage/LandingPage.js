@@ -4,8 +4,11 @@ import './LandingPage.css';
 
 export default function LandingPage() {
     return(
-        <div className="lp-main-photo">
-            <img src={photo1} />
+        <div>
+            <div className="lp-main-photo">
+                <img src={photo1} />
+            </div>            
         </div>
+
     )
 }
