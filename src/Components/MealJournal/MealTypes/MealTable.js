@@ -39,10 +39,10 @@ export default function MealTable({ mealType, journalDate }) {
                         <TableHead>
                             <TableRow>
                                 <TableCell>Food</TableCell>
-                                <TableCell align="right">Calories</TableCell>
-                                <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                                <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                                <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                                <TableCell align="center">Calories</TableCell>
+                                <TableCell align="center">Fat&nbsp;(g)</TableCell>
+                                <TableCell align="center">Carbs&nbsp;(g)</TableCell>
+                                <TableCell className="protein-col" align="center">Protein&nbsp;(g)</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -51,10 +51,10 @@ export default function MealTable({ mealType, journalDate }) {
                                     <TableCell component="th" scope="row">
                                     {food.name}
                                     </TableCell>
-                                    <TableCell align="right">{food.calories}</TableCell>
-                                    <TableCell align="right">{food.fat}</TableCell>
-                                    <TableCell align="right">{food.carbs}</TableCell>
-                                    <TableCell align="right">{food.protein}</TableCell>
+                                    <TableCell align="center">{food.calories}</TableCell>
+                                    <TableCell align="center">{food.fat}</TableCell>
+                                    <TableCell align="center">{food.carbs}</TableCell>
+                                    <TableCell className="protein-col" align="center">{food.protein}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

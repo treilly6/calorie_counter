@@ -11,10 +11,29 @@ body {
 .main-content-container {
     max-width: 1000px;
     margin: 0 auto;
-    padding: 50px 0px;
 }
 
 .calendar-cont {
     display: flex;
     justify-content: center;
+}
+
+.btn-pop::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border : 2px solid #3f51b5;
+    border-radius: 5px;
+    transition: .1s;
+}
+
+.btn-pop:hover::before,
+.btn-pop:focus::before {
+    top : -4px;
+    left : -4px;
+    bottom : -4px;
+    right : -4px;
 }

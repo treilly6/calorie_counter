@@ -13,19 +13,21 @@ export default function FoodItem(props) {
     const foodData = props.location.state.foodItem;
     const journalDate = props.location.state.journalDate;
 
+    // set the states for nutrition to the incoming foodData rounded to 1 decimal place
     const [numServings, setNumServings] = useState(1);
-    const [calories, setCalories] = useState(foodData.fields.nf_calories);
-    const [fat, setFat] = useState(foodData.fields.nf_total_fat);
-    const [carbs, setCarbs] = useState(foodData.fields.nf_total_carbohydrate);
-    const [protein, setProtein] = useState(foodData.fields.nf_protein);
+    const [calories, setCalories] = useState(Math.round(foodData.fields.nf_calories * 10) / 10);
+    const [fat, setFat] = useState(Math.round(foodData.fields.nf_total_fat * 10) / 10);
+    const [carbs, setCarbs] = useState(Math.round(foodData.fields.nf_total_carbohydrate * 10) / 10);
+    const [protein, setProtein] = useState(Math.round(foodData.fields.nf_protein * 10) / 10);
     const [redirect, setRedirect ] = useState(false);
 
     const setNutrition = (servings) => {
         // used to set all the state nutritional info at once based on the servings
-        setCalories(foodData.fields.nf_calories * servings);
-        setFat(foodData.fields.nf_total_fat * servings);
-        setCarbs(foodData.fields.nf_total_carbohydrate * servings);
-        setProtein(foodData.fields.nf_protein * servings);
+        // rounded to 1 decimal place
+        setCalories(Math.round(foodData.fields.nf_calories * servings * 10) / 10);
+        setFat(Math.round(foodData.fields.nf_total_fat * servings * 10) / 10);
+        setCarbs(Math.round(foodData.fields.nf_total_carbohydrate * servings * 10) / 10);
+        setProtein(Math.round(foodData.fields.nf_protein * servings * 10) / 10);
     }
 
     // handle the chaneges to the number of servings input
@@ -45,6 +47,14 @@ export default function FoodItem(props) {
     // once there is a db setup this will post date to the db thru api and if successful
     // redirect back to the journalHome.js
     const saveJournalData = () => {
+        // if invalid num servigs retun null
+        if(numServings === 0) {
+            return
+        }
+
+        // this mimics where the api call will be
+        // must post the data and if save was successful then
+        // redirect to the journal Home
         setTimeout(() => {
             const redirectState = {
                 journalDate : journalDate,
@@ -84,6 +94,9 @@ export default function FoodItem(props) {
                             }}
                             variant="outlined"
                         />
+                        <div style={{display : (numServings < 1 ? "block" : "none") }}>
+                            <div style={{color : "#ff0000"}}>* Servings cannot be zero</div>
+                        </div>
                     </div>
                     <div className="nutrition-info-cont">
                         <div>Calories</div>
@@ -103,7 +116,7 @@ export default function FoodItem(props) {
                     </div>
                 </div>
                 <div className="button-cont">
-                    <Button type="submit" variant="outlined" color="primary" onClick={saveJournalData}>Add To Journal</Button>
+                    <Button className="btn-pop" disabled={numServings < 1} type="submit" variant="contained" color="primary" onClick={saveJournalData}>Add To Journal</Button>
                 </div>
             </Paper>
         )

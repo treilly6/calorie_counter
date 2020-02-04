@@ -8,7 +8,7 @@ import './Search.css';
 class APISearch extends React.Component {
     state = {
         foodSearch : '',
-        searchResults : null,
+        searchResults : [],
     }
 
     constructor(props){
@@ -24,6 +24,13 @@ class APISearch extends React.Component {
 
     submit = (e) => {
         e.preventDefault();
+
+        // if the user is submitting an empty search
+        // set search results to empty array and return
+        if(this.state.foodSearch === '') {
+            this.setState({searchResults : []});
+            return
+        }
 
         const headers = {
             headers : {
@@ -60,7 +67,7 @@ class APISearch extends React.Component {
             <div className="api-search-main-cont">
                 <form onSubmit={this.submit} className="search-form-container">
                     <TextField id="outlined-basic" variant="outlined" type="text" label="Search Food Item" name="foodSearch" value={this.state.foodSearch} onChange={this.changeInput} />
-                    <Button type="submit" variant="outlined" color="primary">Search</Button>
+                    <Button type="submit" variant="contained" color="primary">Search</Button>
                 </form>
                 <SearchResults searchResults={this.state.searchResults} journalDate={this.props.location.state.journalDate} />
             </div>

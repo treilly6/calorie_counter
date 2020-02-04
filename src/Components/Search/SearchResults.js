@@ -24,7 +24,7 @@ export default function SearchResults({ searchResults, journalDate }) {
         });
     }
 
-    if(!searchResults) {
+    if(searchResults.length === 0) {
         return (
             <div style={{marginTop : "10px"}}>
                 <div style={{textAlign : "center", fontWeight:"bold", fontSize : "1.5em"}}>No Search Results</div>

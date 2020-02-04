@@ -4,6 +4,7 @@ import APISearch from '../Search/APISearch';
 import MealTable from './MealTypes/MealTable';
 import CalorieCounter from '../CalorieCounter/CalorieCounter';
 import axios from 'axios';
+import './JournalHome.css';
 
 export default function JournalHome(props) {
 
@@ -34,7 +35,7 @@ export default function JournalHome(props) {
     }
 
     return (
-        <div style={{paddingTop : "15px"}}>
+        <div className="journal-main-cont">
             <CalendarInput sendDateToParent={getDate} journalDate={journalDate} />
             <CalorieCounter />
             <MealTable journalDate={journalDate} mealType="Breakfast" />
