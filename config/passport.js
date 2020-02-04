@@ -13,20 +13,20 @@ module.exports = function(passport) {
                     if(!user) {
                         return done(null, false, { message : "Invalid Username"})
                     }
+
+                    // check the passwords
+                    bcrypt.compare(password, user.password, (err, isMatch) => {
+                        if(err) {
+                            throw err;
+                        }
+                        if (isMatch) {
+                            return done(null, user);
+                        } else {
+                            return done(null, false, { message : "Incorrect Password"});
+                        }
+                    });
                 })
                 .catch(err => console.log(err))
-
-            // check the passwords
-            bcrypt.compare(password, user.password, (err, isMatch) => {
-                if(err) {
-                    throw err;
-                }
-                if (isMatch) {
-                    return done(null, user);
-                } else {
-                    return done(null, false, { message : "Incorrect Password"});
-                }
-            });
         })
     );
 

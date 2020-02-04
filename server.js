@@ -13,16 +13,17 @@ require('./config/passport')(passport);
 // body parser
 app.use(express.json());
 
-// passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
-
 // express session
 app.use(session({
     secret : "secret",
     resave : true,
     saveUninitialized : true,
 }));
+
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // api Route files
 const UserRoutes = require('./routes/api/UserRoutes');
