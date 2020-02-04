@@ -27,34 +27,11 @@ app.use(passport.session());
 
 // api Route files
 const UserRoutes = require('./routes/api/UserRoutes');
+const FoodRoutes = require('./routes/api/FoodRoutes');
 
 // define the api routes
 app.use('/api/user', UserRoutes);
-
-
-// get the food data based on the date
-app.get('/api/foodItems', (req,res) => {
-    const foodData = [
-        {
-            name : "Peanut Butter",
-            calories : 180,
-            carbs : 13,
-            fat : 18,
-            protein : 9,
-        }
-    ];
-
-    // would like the return to be soemthing like
-    // foodData = {
-    //      breakfast : [{foodDataItem}],
-    //      lunch : [{foodDataItem}],
-    //      dinner : [{foodDataItem}],
-    //      snacks : [{foodDataItem}],
-// }
-
-    res.json({foodData});
-});
-
+app.use('/api/foodItems', FoodRoutes);
 
 // Connect to DB
 mongoose.connect(`${params.db.url}`, { useNewUrlParser : true }, (err) =>

@@ -22,6 +22,7 @@ function App() {
         console.log("User before the axios call ", user);
         axios.get('/api/user/auth')
             .then(res => {
+                console.log("HERE IS FULL RES ", res);
                 console.log("HERE IS THE DATA ", res.data.auth);
                 if(res.data.auth) {
                     setUser(res.data.auth);

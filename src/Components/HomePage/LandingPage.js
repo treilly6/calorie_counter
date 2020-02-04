@@ -12,7 +12,7 @@ export default function LandingPage() {
                     <div>
                         <div style={{fontSize : "5em"}}>Count Calories,</div>
                         <div style={{fontSize : "5em"}}>Achieve Goals</div>
-                        <div className="signup-text">Start your fitness journey</div>
+                        <div className="signup-text" onClick={() => window.location = "/signup"}>Start your fitness journey</div>
                     </div>
                 </div>
                 <div className="shader"></div>

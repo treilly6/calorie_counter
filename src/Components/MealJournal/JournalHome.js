@@ -24,7 +24,7 @@ export default function JournalHome(props) {
         setJournalDate(date);
 
         // want an api call when the date changes to get the proper data for that days meals and calories
-        axios.get('/api/foodItems')
+        axios.get('/api/foodItems' , {params : {date : journalDate}})
             .then(res => {
                 console.log("HERE THE API FOOD ITEMS ");
                 console.log(res);
