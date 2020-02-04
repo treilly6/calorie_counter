@@ -8,6 +8,8 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 import Paper from '@material-ui/core/Paper';
 import LandingPage from './Components/HomePage/LandingPage';
+import LogIn from './Components/User/LogIn';
+import SignUp from './Components/User/SignUp';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
               <Header />
               <Paper elevation={2}>
                   <Route exact path="/lp" component={LandingPage} />
+                  <Route exact path="/login" component={LogIn} />
+                  <Route exact path="/signup" component={SignUp} />
                   <div className="main-content-container">
                       <Route exact path="/" component={JournalHome} />
                       <Route exact path="/search" component={APISearch} />

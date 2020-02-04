@@ -32,7 +32,8 @@ export default function NavBar() {
           <Typography variant="h6" className={classes.title}>
             News
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button onClick={() => {window.location = "/login"}} color="inherit">Log in</Button>
+          <Button onClick={() => {window.location = "/signup"}} color="inherit">Sign up</Button>
         </Toolbar>
       </AppBar>
     </div>

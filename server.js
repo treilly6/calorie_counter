@@ -1,8 +1,24 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const params = require('./config/params');
+const passport = require('passport');
 
 const app = express();
+
+// require the passport config and pass in the passport variable
+// that is imported above
+require('./config/passport')(passport);
+
+// body parser
+app.use(express.json());
+
+
+// api Route files
+const UserRoutes = require('./routes/api/UserRoutes');
+
+// define the api routes
+app.use('/api/user', UserRoutes);
+
 
 // get the food data based on the date
 app.get('/api/foodItems', (req,res) => {
@@ -25,7 +41,20 @@ app.get('/api/foodItems', (req,res) => {
 // }
 
     res.json({foodData});
-})
+});
+
+
+// express session
+// app.use(session({
+//     secret : "secret",
+//     resave : true,
+//     saveUninitialized : true,
+// }));
+
+
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Connect to DB
 mongoose.connect(`${params.db.url}`, { useNewUrlParser : true }, (err) =>
