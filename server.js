@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const params = require('./config/params');
 const passport = require('passport');
+const session = require('express-session');
 
 const app = express();
 
@@ -12,6 +13,16 @@ require('./config/passport')(passport);
 // body parser
 app.use(express.json());
 
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+// express session
+app.use(session({
+    secret : "secret",
+    resave : true,
+    saveUninitialized : true,
+}));
 
 // api Route files
 const UserRoutes = require('./routes/api/UserRoutes');
@@ -43,18 +54,6 @@ app.get('/api/foodItems', (req,res) => {
     res.json({foodData});
 });
 
-
-// express session
-// app.use(session({
-//     secret : "secret",
-//     resave : true,
-//     saveUninitialized : true,
-// }));
-
-
-// passport middleware
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Connect to DB
 mongoose.connect(`${params.db.url}`, { useNewUrlParser : true }, (err) =>
