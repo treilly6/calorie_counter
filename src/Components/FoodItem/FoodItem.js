@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 import Paper from '@material-ui/core/Paper';
 import './FoodItem.css';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 export default function FoodItem(props) {
     console.log("HERE IS THE PROPOS OF THE FOOD ITEM ");
     console.log(props);
 
+    // get the context from the context provider
+    const { user } = useContext(UserContext);
+
 
     const foodData = props.location.state.foodItem;
     const journalDate = props.location.state.journalDate;
+    const foodName = foodData.fields.item_name;
 
     // set the states for nutrition to the incoming foodData rounded to 1 decimal place
     const [numServings, setNumServings] = useState(1);
@@ -52,6 +58,28 @@ export default function FoodItem(props) {
             return
         }
 
+
+        // make the food item obj containing all the food data
+        // this uses shorthand syntax for object creation where
+        // since key and value are the same it can be listed once
+        const foodItemObj = {
+            servings : numServings,
+            calories,
+            fat,
+            carbs,
+            protein,
+            journalDate,
+            foodName,
+            username : user.username,
+        }
+
+        axios.post('/api/foodItem/newItem', foodItemObj)
+            .then(res => {
+                console.log("HERE IS THE RESULT ");
+                console.log(res);
+            })
+            .catch(err => console.log(err))
+
         // this mimics where the api call will be
         // must post the data and if save was successful then
         // redirect to the journal Home
@@ -77,7 +105,7 @@ export default function FoodItem(props) {
         return (
             <Paper elevation={3}>
                 <div className="food-item-header">
-                    <div style={{padding:"0px 5px"}}>{foodData.fields.item_name}</div>
+                    <div style={{padding:"0px 5px"}}>{foodName}</div>
                 </div>
                 <div className="nutrition-body">
                     <div className="nutrition-header" >Nutritional Info</div>

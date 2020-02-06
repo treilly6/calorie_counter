@@ -16,9 +16,9 @@ export default function MaterialUIPickers({ sendDateToParent, journalDate }) {
 
     // ge the new date and send it to parent (JounralHome.js)
     const handleDateChange = date => {
-    setSelectedDate(date);
-    console.log("HERE DATE IN THE CALEDNAR BEFORE SEDN");
-    sendDateToParent(date);
+        setSelectedDate(date);
+        console.log("HERE DATE IN THE CALEDNAR BEFORE SEDN");
+        sendDateToParent(date);
     };
 
     return (
