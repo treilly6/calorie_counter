@@ -10,30 +10,21 @@ import AddFood from './AddFood';
 import './MealTypes.css';
 import { Link } from 'react-router-dom';
 
-export default function MealTable({ mealType, journalDate }) {
+export default function MealTable({ mealType, journalDate, foodData }) {
     // mealType specifies if meal was breakfast, lunch, dinner, or snacks
     // journalDate specifies the date user selected on journalHome.js
 
-    console.log("HERE IS THE MEALTYPE AND THE DATE IN THE MEAL TABLE JS ", mealType, journalDate);
-
-    const foodData = [
-        {
-            name : "Peanut Butter",
-            calories : 180,
-            carbs : 13,
-            fat : 18,
-            protein : 9,
-        }
-    ];
+    console.log("HERE IS THE MEALTYPE AND THE DATE IN THE MEAL TABLE JS ", mealType, journalDate, foodData, "\n", "\n", "\n", "\n");
 
     // if there is food date return the table
     if(foodData.length > 0) {
+        const totalCalories = foodData.reduce((acc, currElem) => {return acc + Number(currElem.calories)}, 0);
         return(
             <div className="table-cont">
                 <TableContainer component={Paper}>
                     <div className="meal-type-header-cont">
                         <div style={{fontWeight : "bold"}}>{mealType}</div>
-                        <div style={{fontWeight : "bold"}}>Calories</div>
+                        <div style={{fontWeight : "bold"}}>{totalCalories}</div>
                     </div>
                     <Table  aria-label="simple table">
                         <TableHead>
@@ -49,7 +40,10 @@ export default function MealTable({ mealType, journalDate }) {
                             {foodData.map(food => (
                                 <TableRow key={food.name}>
                                     <TableCell component="th" scope="row">
-                                    {food.name}
+                                        <div>
+                                            <div>{food.foodName}</div>
+                                            <div style={{color : "#b3b3b3"}}>{food.servings} {(food.servings == 1 ? "Serving" : "Servings")}</div>
+                                        </div>
                                     </TableCell>
                                     <TableCell align="center">{food.calories}</TableCell>
                                     <TableCell align="center">{food.fat}</TableCell>
@@ -60,11 +54,10 @@ export default function MealTable({ mealType, journalDate }) {
                         </TableBody>
                     </Table>
 
-                    {/* need to add the date into the state of this link */}
                     <Link className="add-food-link" to={{
                         pathname : "/search",
                         state : {
-                            mealType : mealType,
+                            mealType : mealType.toLowerCase(),
                             journalDate : journalDate,
                         }
 
@@ -75,18 +68,18 @@ export default function MealTable({ mealType, journalDate }) {
             </div>
         )
     } else {
-        // if there is no food data do not return a table
+        const totalCalories = 0;
         return (
             <div className = "table-cont">
                 <div className="meal-type-header-cont">
                     <div style={{fontWeight : "bold"}}>{mealType}</div>
-                    <div style={{fontWeight : "bold"}}>Calories</div>
+                    <div style={{fontWeight : "bold"}}>{totalCalories}</div>
                 </div>
                 <Link className="add-food-link"
                     to={{
                         pathname : "/search",
                         state : {
-                            mealType : mealType,
+                            mealType : mealType.toLowerCase(),
                             journalDate : journalDate,
                         }
                 }}>

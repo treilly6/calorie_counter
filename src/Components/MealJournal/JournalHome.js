@@ -11,6 +11,14 @@ export default function JournalHome(props) {
     console.log("HERE THE JOURNAL HOME PROPS ", props);
 
     const [journalDate, setJournalDate] = useState(null);
+    // const [params, setParams] = useState(false);
+    const [foodData, setFoodData] = useState({
+        breakfast : [],
+        lunch : [],
+        dinner : [],
+        snacks : [],
+    });
+
 
     // props.location.state will have a redirectDate value when a user saves
     // meal data on the FoodItem.js page and it redirects back to the journalHome
@@ -22,7 +30,7 @@ export default function JournalHome(props) {
     useEffect(() => {
         console.log("USE EFFECT IN JOURNAL HOME ");
         const dateObj = (props.location.state && props.location.state.redirectDate ? new Date(props.location.state.redirectDate) : new Date());
-        setJournalDate(dateObj)
+        setJournalDate(dateObj);
     }, []);
 
     useEffect(() => {
@@ -34,6 +42,10 @@ export default function JournalHome(props) {
             .then(res => {
                 console.log("HERE THE API FOOD ITEMS ");
                 console.log(res);
+                if(res.data.success) {
+                    // set the foodData to the retrieved data
+                    setFoodData(res.data.success);
+                }
             })
             .catch(err => {
                 console.log(err);
@@ -41,25 +53,25 @@ export default function JournalHome(props) {
 
     }, [journalDate])
 
-
-
-
-
-
     const getDate = (date) => {
         console.log("HERE IS THE DATE IN THE JOURNAL HOME ", date);
         console.log("HERE THE JDATE BEFOER STATE CHANGE ", journalDate);
         setJournalDate(date);
     }
 
+
+    console.log("BEFORE THE FIRST RENDER ");
+    console.log(journalDate);
+    console.log(foodData);
+    console.log("\n","\n","\n","\n","\n","\n","\n","\n")
     return (
         <div className="journal-main-cont">
             <CalendarInput sendDateToParent={getDate} journalDate={journalDate} />
-            <CalorieCounter />
-            <MealTable journalDate={journalDate} mealType="Breakfast" />
-            <MealTable journalDate={journalDate} mealType="Lunch"/>
-            <MealTable journalDate={journalDate} mealType="Dinner"/>
-            <MealTable journalDate={journalDate} mealType="Snacks"/>
+            <CalorieCounter foodData={foodData} />
+            <MealTable journalDate={journalDate} mealType="Breakfast" foodData={foodData.breakfast} />
+            <MealTable journalDate={journalDate} mealType="Lunch" foodData={foodData.lunch} />
+            <MealTable journalDate={journalDate} mealType="Dinner" foodData={foodData.dinner} />
+            <MealTable journalDate={journalDate} mealType="Snacks" foodData={foodData.snacks} />
         </div>
     )
 }

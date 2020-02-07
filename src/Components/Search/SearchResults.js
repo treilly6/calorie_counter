@@ -8,8 +8,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Redirect, Link } from 'react-router-dom';
 
-export default function SearchResults({ searchResults, journalDate }) {
-    console.log("HERE THE Search Results ", searchResults, journalDate);
+export default function SearchResults({ searchResults, journalDate, mealType }) {
+    console.log("HERE THE Search Results ", searchResults, journalDate, mealType);
     // const searchResults = props.SearchResults;
 
     const [redirect, setRedirect] = useState(false);
@@ -43,7 +43,8 @@ export default function SearchResults({ searchResults, journalDate }) {
                                                         pathname : "/item",
                                                         state : {
                                                             foodItem : food,
-                                                            journalDate : journalDate
+                                                            journalDate,
+                                                            mealType,
                                                         }
                                                     }}>
                                                     <span className="link-span">{food.fields.item_name}</span>

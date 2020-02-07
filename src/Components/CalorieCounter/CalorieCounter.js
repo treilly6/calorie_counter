@@ -1,7 +1,16 @@
 import React from 'react';
 import './CalorieCounter.css';
 
-export default function CalorieCounter() {
+export default function CalorieCounter({ foodData }) {
+
+    const totalCalories = Object.keys(foodData).reduce((acc, currKey) => {
+        return acc + foodData[currKey].reduce((acc2, currItem) => {
+                return acc2 + Number(currItem.calories)
+        }, 0)
+    }, 0);
+
+    const remCalories = 2000 - totalCalories;
+
     return (
         <div className="calorie-counter-cont">
             <div className="calorie-counter-header">Calories Remaining</div>
@@ -12,12 +21,12 @@ export default function CalorieCounter() {
                 </div>
                 <div className="calorie-cont">-</div>
                 <div className="calorie-cont">
-                    <div>0</div>
+                    <div>{totalCalories}</div>
                     <div>Food</div>
                 </div>
                 <div className="calorie-cont">=</div>
                 <div className="calorie-cont">
-                    <div>2,000</div>
+                    <div style={{color : (remCalories > 0 ? "green" : "red")}}>{remCalories}</div>
                     <div>Remaining</div>
                 </div>
             </div>

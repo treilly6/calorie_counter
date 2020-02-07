@@ -18,6 +18,7 @@ export default function FoodItem(props) {
     const foodData = props.location.state.foodItem;
     const journalDate = props.location.state.journalDate;
     const foodName = foodData.fields.item_name;
+    const mealType = props.location.state.mealType;
 
     // set the states for nutrition to the incoming foodData rounded to 1 decimal place
     const [numServings, setNumServings] = useState(1);
@@ -71,31 +72,25 @@ export default function FoodItem(props) {
             journalDate,
             foodName,
             username : user.username,
+            mealType,
         }
 
-        axios.post('/api/foodItem/newItem', foodItemObj)
+        axios.post('/api/foodItems/newItem', foodItemObj)
             .then(res => {
                 console.log("HERE IS THE RESULT ");
-                console.log(res);
+                console.log(res.data);
+                // if successful request set redirect to true
+                if(res.data.success) {
+                    setRedirect(true);
+                }
             })
-            .catch(err => console.log(err))
-
-        // this mimics where the api call will be
-        // must post the data and if save was successful then
-        // redirect to the journal Home
-        setTimeout(() => {
-            const redirectState = {
-                journalDate : journalDate,
-            }
-            console.log(redirectState, "YEET");
-            setRedirect(true);
-        }, 5000)
+            .catch(err => console.log(err));
     }
 
     if(redirect) {
         return (
             <Redirect to={{
-                pathname : "/",
+                pathname : "/journal",
                 state : {
                     redirectDate : journalDate,
                 }
