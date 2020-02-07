@@ -70,22 +70,24 @@ export default function MealTable({ mealType, journalDate, foodData }) {
     } else {
         const totalCalories = 0;
         return (
-            <div className = "table-cont">
-                <div className="meal-type-header-cont">
-                    <div style={{fontWeight : "bold"}}>{mealType}</div>
-                    <div style={{fontWeight : "bold"}}>{totalCalories}</div>
+            <Paper>
+                <div className = "table-cont">
+                    <div className="meal-type-header-cont">
+                        <div style={{fontWeight : "bold"}}>{mealType}</div>
+                        <div style={{fontWeight : "bold"}}>{totalCalories}</div>
+                    </div>
+                    <Link className="add-food-link"
+                        to={{
+                            pathname : "/search",
+                            state : {
+                                mealType : mealType.toLowerCase(),
+                                journalDate : journalDate,
+                            }
+                    }}>
+                        <AddFood />
+                    </Link>
                 </div>
-                <Link className="add-food-link"
-                    to={{
-                        pathname : "/search",
-                        state : {
-                            mealType : mealType.toLowerCase(),
-                            journalDate : journalDate,
-                        }
-                }}>
-                    <AddFood />
-                </Link>
-            </div>
+            </Paper>            
         )
     }
 }
