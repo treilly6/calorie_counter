@@ -1,0 +1,35 @@
+.nav-menu-dropdown {
+    position: absolute;
+    z-index: 4;
+    background-color: rgba(0,0,0,.6);
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0px 0px 7px 7px;
+    transition: .5s;
+    overflow-y: hidden;
+}
+
+.nav-padding {
+    padding: 7px 0px;
+}
+
+.nav-link-cont {
+    padding : 15px 0px;
+}
+
+.nav-link {
+    color : #fff;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+.flex-col {
+    display: flex;
+    flex-direction: column;
+}
