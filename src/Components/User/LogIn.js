@@ -6,11 +6,14 @@ import Button from '@material-ui/core/Button';
 import './User.css';
 import { Redirect } from 'react-router-dom';
 
-export default function LogIn() {
+export default function LogIn(props) {
+    console.log("HERE ARE THE LOGIN PROPS ", props);
     const [redirect, setRedirect ] = useState(null);
     const [formState, setFormState ] = useState({username : '', password : ''});
 
     const { user, setUser } = useContext(UserContext);
+
+    
 
     // handle the changing inputs
     const changeInput = (e) => {

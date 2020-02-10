@@ -12,6 +12,7 @@ import LandingPage from './Components/HomePage/LandingPage';
 import LogIn from './Components/User/LogIn';
 import SignUp from './Components/User/SignUp';
 import { UserContext } from './context/UserContext';
+import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
 
 function App() {
     const [user, setUser] = useState(null);
@@ -46,9 +47,9 @@ function App() {
                         <Route exact path="/login" component={LogIn} />
                         <Route exact path="/signup" component={SignUp} />
                         <div className="main-content-container">
-                            <Route exact path="/journal" component={JournalHome} />
-                            <Route exact path="/search" component={APISearch} />
-                            <Route exact path="/item" component={FoodItem} />
+                            <ProtectedRoute exact path="/journal" component={JournalHome} />
+                            <ProtectedRoute exact path="/search" component={APISearch} />
+                            <ProtectedRoute exact path="/item" component={FoodItem} />
                         </div>
                     </Paper>
                 </UserContext.Provider>
