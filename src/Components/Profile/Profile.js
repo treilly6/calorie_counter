@@ -10,7 +10,7 @@ export default function Profile() {
     const { user } = useContext(UserContext);
 
     // dataType used to ttackl which type of data is selected (i.e today, 7D, 14D, 30D, calendar)
-    const [dataType, setDataType] = useState(null);
+    const [dataType, setDataType] = useState("today");
 
     // selectedData is the data related to the dataType
     const [selectedData, setSelectedData] = useState(null);
@@ -45,6 +45,8 @@ export default function Profile() {
                 console.log("HERE IS THE RES");
                 console.log(res);
                 setDataFetched(true);
+                setAllData(res.data.success);
+                setSelectedData(res.data.success[dataType]);
             })
             .catch(err => console.log(err));
     }, [])
@@ -57,6 +59,9 @@ export default function Profile() {
         } else {
             // change the selected Data to the proper type
             console.log("Gonna update the selected data")
+            setDataType(val);
+            console.log("HERE THE VAL AND THE ALL DAYA ", val, allData, "\n", "\n", "\n");
+            setSelectedData(allData[val]);
         }
     }
 
@@ -65,13 +70,13 @@ export default function Profile() {
             <div className="profile-cont">
                 <div>{user.username}</div>
                 <div className="select-data-header">
-                    <div className="data-header-item">Today</div>
-                    <div className="data-header-item">7D</div>
-                    <div className="data-header-item">14D</div>
-                    <div className="data-header-item">30D</div>
-                    <div className="data-header-item">Calendar</div>
+                    <div className="data-header-item" onClick={() => dataClick("today")}>Today</div>
+                    <div className="data-header-item" onClick={() => dataClick("week")}>7D</div>
+                    <div className="data-header-item" onClick={() => dataClick("twoWeek")}>14D</div>
+                    <div className="data-header-item" onClick={() => dataClick("month")}>30D</div>
+                    <div className="data-header-item" onClick={() => dataClick("calendar")}>Calendar</div>
                 </div>
-                <DataCharts />
+                <DataCharts dataType={dataType} data={selectedData} />
             </div>
         )
     } else {

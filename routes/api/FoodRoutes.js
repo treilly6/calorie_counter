@@ -113,6 +113,29 @@ router.get('/allData' , (req, res) => {
     console.log(twoWeekDate);
     console.log(monthDate);
 
+    // function that will group the meals by the date they were entered
+    // used to find the total calories for specific dates
+    const groupByDate = (mealArray) => {
+        return mealArray.reduce((map, mealItem) => {
+            console.log(mealItem.date);
+            console.log(map);
+            console.log("above is map");
+            console.log(mealItem);
+            console.log(tools.convertDateForCharts(mealItem.date));
+            const chartDate = tools.convertDateForCharts(mealItem.date);
+            if(chartDate in map) {
+                console.log("Key is in the map");
+                map[chartDate].calories += Number(mealItem.calories);
+            } else {
+                console.log("key is not in the map");
+                map[chartDate] = {};
+                map[chartDate].date = chartDate;
+                map[chartDate].calories = Number(mealItem.calories);
+            }
+            return map;
+        }, {});
+    }
+
     // find all the users meal info
     Meal.find({
         username : username,
@@ -123,15 +146,19 @@ router.get('/allData' , (req, res) => {
 
         // make the food Data object which holds the meals based on their mealtype
         const mealData = {
-            today : meals.filter(meal => tools.dateChecker(meal.date, currentDate)),
-            week : meals.filter(meal => tools.dateRangeChecker(weekDate, currentDate, meal.date)),
-            twoWeek : meals.filter(meal => tools.dateRangeChecker(twoWeekDate, currentDate, meal.date)),
-            month : meals.filter(meal => tools.dateRangeChecker(monthDate, currentDate, meal.date)),
+            today : groupByDate(meals.filter(meal => tools.dateChecker(meal.date, currentDate))),
+            week : groupByDate(meals.filter(meal => tools.dateRangeChecker(weekDate, currentDate, meal.date))),
+            twoWeek : groupByDate(meals.filter(meal => tools.dateRangeChecker(twoWeekDate, currentDate, meal.date))),
+            month : groupByDate(meals.filter(meal => tools.dateRangeChecker(monthDate, currentDate, meal.date))),
             calendar : meals,
         };
 
-        console.log("HERE IS THE FLTER SHIT IT SHOULD ADD THAT THING PUT IT DONT");
-        console.log(meals.filter(meal => tools.dateChecker(meal.date, currentDate)));
+        console.log("HERE IS THE TODAY RESULT IN THE MEAL DATA");
+        console.log(mealData.today);
+
+
+
+        console.log("HERE IS THE TEST MAP CONST");
 
         console.log("HERE THE ABOUT TO RETUrN THING");
 

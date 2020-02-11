@@ -7,11 +7,14 @@ export default function CalorieCounter({ foodData }) {
 
     const { user, setUser } = useContext(UserContext);
 
-    const totalCalories = Object.keys(foodData).reduce((acc, currKey) => {
-        return acc + foodData[currKey].reduce((acc2, currItem) => {
-                return acc2 + Number(currItem.calories)
+    // find the total calories consumed for the day and round to the nearest tenth
+    const totalCalories = Math.round(
+        Object.keys(foodData).reduce((acc, currKey) => {
+            return acc + foodData[currKey].reduce((acc2, currItem) => {
+                    return acc2 + Number(currItem.calories)
+            }, 0)
         }, 0)
-    }, 0);
+    * 10) / 10;
 
     const remCalories = user.calorieGoal - totalCalories;
 

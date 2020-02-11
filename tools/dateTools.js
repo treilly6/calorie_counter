@@ -44,5 +44,16 @@ module.exports = {
         const upperDate = (date1 <= date2 ? date2 : date1);
 
         return(lowerDate <= dateToCheck && dateToCheck <= upperDate)
+    },
+
+    // take a date and convert it to month/day format
+    convertDateForCharts : (date) => {
+        console.log("HERE IS THE DATE IN THE TOOLS HELPER ", date, typeof(date));
+
+        // get the month and the day of the date object
+        const month = date.getUTCMonth() + 1;
+        const day = date.getUTCDate();
+
+        return(`${month}/${day}`)
     }
 }
