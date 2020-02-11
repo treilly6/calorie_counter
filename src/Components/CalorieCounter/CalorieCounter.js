@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext, useRef, useState } from 'react';
+import { UserContext } from '../../context/UserContext';
 import './CalorieCounter.css';
+import ChangeCalorieGoal from './ChangeCalorieGoal';
 
 export default function CalorieCounter({ foodData }) {
+
+    const { user, setUser } = useContext(UserContext);
 
     const totalCalories = Object.keys(foodData).reduce((acc, currKey) => {
         return acc + foodData[currKey].reduce((acc2, currItem) => {
@@ -9,14 +13,14 @@ export default function CalorieCounter({ foodData }) {
         }, 0)
     }, 0);
 
-    const remCalories = 2000 - totalCalories;
+    const remCalories = user.calorieGoal - totalCalories;
 
     return (
         <div className="calorie-counter-cont">
             <div className="calorie-counter-header">Calories Remaining</div>
             <div className="calorie-counter-calc-cont">
                 <div className="calorie-cont">
-                    <div>2,000</div>
+                    <div>{user.calorieGoal}</div>
                     <div>Goal</div>
                 </div>
                 <div className="calorie-cont">-</div>
@@ -30,6 +34,7 @@ export default function CalorieCounter({ foodData }) {
                     <div>Remaining</div>
                 </div>
             </div>
+            <ChangeCalorieGoal />
         </div>
     )
 }

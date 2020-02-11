@@ -29,3 +29,9 @@
 .btn-cont {
     text-align: center;
 }
+
+.message-box-cont {
+    max-width: 500px;
+    display: flex;
+    align-items: center;
+}

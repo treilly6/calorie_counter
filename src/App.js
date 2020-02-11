@@ -17,6 +17,7 @@ import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
 function App() {
     const [user, setUser] = useState(null);
     const [userId, setUserId] = useState(null);
+    const [dataFetched, setDataFetched] = useState(false);
 
     useEffect(() => {
         console.log("USE EFFECT IS CALLED")
@@ -32,32 +33,37 @@ function App() {
                     setUser(null);
                     setUserId(null);
                 }
+                setDataFetched(true);
 
             })
             .catch(err => console.log(err));
     }, [userId]);
 
-    return (
-        <Router>
-            <div className="App">
-                <UserContext.Provider value={{ user, setUser }}>
-                    <Header />
-                    <Paper elevation={2}>
-                        <Route exact path="/" component={LandingPage} />
-                        <Route exact path="/login" component={LogIn} />
-                        <Route exact path="/signup" component={SignUp} />
-                        <div className="main-content-container">
-                            <ProtectedRoute exact path="/journal" component={JournalHome} />
-                            <ProtectedRoute exact path="/search" component={APISearch} />
-                            <ProtectedRoute exact path="/item" component={FoodItem} />
-                        </div>
-                    </Paper>
-                </UserContext.Provider>
-              <Footer />
-            </div>
-        </Router>
+    if(dataFetched) {
+        return (
+            <Router>
+                <div className="App">
+                    <UserContext.Provider value={{ user, setUser }}>
+                        <Header />
+                        <Paper elevation={2}>
+                            <Route exact path="/" component={LandingPage} />
+                            <Route exact path="/login" component={LogIn} />
+                            <Route exact path="/signup" component={SignUp} />
+                            <div className="main-content-container">
+                                <ProtectedRoute exact path="/journal" component={JournalHome} />
+                                <ProtectedRoute exact path="/search" component={APISearch} />
+                                <ProtectedRoute exact path="/item" component={FoodItem} />
+                            </div>
+                        </Paper>
+                    </UserContext.Provider>
+                  <Footer />
+                </div>
+            </Router>
 
-    );
+        );
+    } else {
+        return null;
+    }
 }
 
 export default App;

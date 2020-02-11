@@ -63,7 +63,7 @@ export default function NavBar() {
           </Typography>
           {user ? (
               <div className="flex-col">
-                  <div>{user.username}</div>
+                  <div style={{textAlign : "center"}}>{user.username}</div>
                   <Button onClick={() => userLogOut()} color="inherit">Log out</Button>
               </div>
           ) : (

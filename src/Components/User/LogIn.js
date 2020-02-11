@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import './User.css';
 import { Redirect } from 'react-router-dom';
+import MessageBox from '../Messages/MessageBox';
 
 export default function LogIn(props) {
     console.log("HERE ARE THE LOGIN PROPS ", props);
@@ -12,8 +13,6 @@ export default function LogIn(props) {
     const [formState, setFormState ] = useState({username : '', password : ''});
 
     const { user, setUser } = useContext(UserContext);
-
-    
 
     // handle the changing inputs
     const changeInput = (e) => {
@@ -59,6 +58,11 @@ export default function LogIn(props) {
             }} />
         )
     } else {
+        var message;
+        if(props.location.state && props.location.state.message) {
+            message = props.location.state.message;
+        }
+
         return (
             <div className="form-cont">
                 <div className="form-border">
@@ -66,6 +70,9 @@ export default function LogIn(props) {
                         <div className="form-header">Log in</div>
                     </div>
                     <div>
+                        <div style={{padding : "0px 10px"}}>
+                            <MessageBox message={message} />
+                        </div>
                         <form onSubmit={submit}>
                             <div className="all-inputs-cont">
                                 <div className="input-cont">

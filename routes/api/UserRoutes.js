@@ -135,4 +135,47 @@ router.get('/logout', (req, res, next) => {
 
 });
 
+// method for updating the user calorie goal
+router.post('/calorieGoal', (req, res) => {
+    console.log("In the calorie goal route ");
+    console.log(req.user);
+    console.log(req.body);
+
+    const calorieGoal = Number(req.body.calorieGoal);
+
+    if(calorieGoal <= 0) {
+        return res.json({failure : {message : "Calorie Goal Must be Positive"}})
+    }
+
+    console.log("HERE IS THE CALOREIR GOAAL VALEU ", calorieGoal);
+
+    // find the user
+    User.findOne({_id : req.user._id})
+        .then(user => {
+            console.log(user);
+            // if not valid user return an error message
+            if(!user) {
+                return res.json({failure : {
+                    message : "User Error : Try to logout then log back in",
+                    }
+                })
+            }
+
+            // change the user's calorie goal
+            user.calorieGoal = calorieGoal;
+
+            // save the updated user
+            user.save(err => {
+                if(err) {
+                    return res.json({failure : {message : "Error : Problem when saving new calorie goal"}})
+                }
+                return res.json({success : {
+                    message : "Success : Saved Calorie Goal",
+                    user : user,
+                }})
+            })
+        })
+        .catch(err => console.log(err));
+})
+
 module.exports = router;
