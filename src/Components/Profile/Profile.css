@@ -1,0 +1,18 @@
+.profile-cont {
+    padding : 20px 0px;
+}
+
+.select-data-header {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.data-header-item {
+    padding : 5px;
+    border : 1px solid black;
+    cursor: pointer;
+}
+
+.chart-cont {
+    overflow-x: auto;
+}

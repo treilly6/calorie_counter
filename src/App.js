@@ -13,7 +13,8 @@ import LogIn from './Components/User/LogIn';
 import SignUp from './Components/User/SignUp';
 import { UserContext } from './context/UserContext';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
-import MessageBox from './Components/Messages/MessageBox.js';
+import Profile from './Components/Profile/Profile';
+
 
 function App() {
     // user that is passed to the user context
@@ -62,6 +63,7 @@ function App() {
                                 <ProtectedRoute exact path="/journal" component={JournalHome} />
                                 <ProtectedRoute exact path="/search" component={APISearch} />
                                 <ProtectedRoute exact path="/item" component={FoodItem} />
+                                <ProtectedRoute exact path="/profile" component={Profile} />
                             </div>
                         </Paper>
                     </UserContext.Provider>

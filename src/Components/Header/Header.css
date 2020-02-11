@@ -1,7 +1,7 @@
 .nav-menu-dropdown {
     position: absolute;
     z-index: 4;
-    background-color: rgba(0,0,0,.6);
+    background-color: #fff;
     min-width: 250px;
     display: flex;
     flex-direction: column;
@@ -9,7 +9,7 @@
     align-items: center;
     border-radius: 0px 0px 7px 7px;
     transition: .5s;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 .nav-padding {
@@ -21,7 +21,7 @@
 }
 
 .nav-link {
-    color : #fff;
+    color : #000;
     text-decoration: none;
 }
 

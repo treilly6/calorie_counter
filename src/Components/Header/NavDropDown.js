@@ -39,7 +39,7 @@ export default function NavDropDown({ navDown, setNavDown }) {
     }
 
     return (
-        <div ref={navMenuRef} className="nav-menu-dropdown">
+        <div ref={navMenuRef} style={{border : (navDown ? "1px solid #ccc" : "none")}} className="nav-menu-dropdown">
             <div className="nav-padding">
                 <div className="nav-link-cont">
                     <Link onClick={closeMenu} className="nav-link" to={{

@@ -74,6 +74,71 @@ router.post('/newItem', (req,res) => {
             res.json({success : meal});
         })
         .catch(err => console.log(err));
+});
+
+// used to get all the user's meal data for the profile page
+router.get('/allData' , (req, res) => {
+    console.log("IN THE ALL DATA FUNCTION");
+    console.log(req.user);
+    console.log(req.query);
+
+
+    // call tools date function to convert the query date to a midnight UTC date
+    // const utcDate = tools.stringToMidnightUTC(req.query.date);
+
+    // console.log("HERE IS THE UTC DATE");
+    // console.log(utcDate);
+
+    // set the username varibale
+    const username = req.user.username;
+
+    // pull out the client year, month, and day from the query params
+    const { year, month, day } = req.query;
+
+    console.log("HERE TEH PARAMS AND SHIT ");
+    console.log(year, month, day);
+
+    console.log("HERE IS THE CONTRUCTED DATE");
+    const currentDate = new Date(Date.UTC(year, month, day));
+    console.log(currentDate);
+    console.log("END OF THE IMPORTANT STUFF");
+
+    const weekDate = tools.dateChange(currentDate, -7);
+    const twoWeekDate = tools.dateChange(currentDate, -14);
+    const monthDate = tools.dateChange(currentDate, -30);
+
+    console.log("HERE ARE ALL THE DATES ");
+    console.log(currentDate);
+    console.log(weekDate);
+    console.log(twoWeekDate);
+    console.log(monthDate);
+
+    // find all the users meal info
+    Meal.find({
+        username : username,
+    })
+    .then(meals => {
+        console.log("HERE ARE THE MEALS");
+        console.log(meals);
+
+        // make the food Data object which holds the meals based on their mealtype
+        const mealData = {
+            today : meals.filter(meal => tools.dateChecker(meal.date, currentDate)),
+            week : meals.filter(meal => tools.dateRangeChecker(weekDate, currentDate, meal.date)),
+            twoWeek : meals.filter(meal => tools.dateRangeChecker(twoWeekDate, currentDate, meal.date)),
+            month : meals.filter(meal => tools.dateRangeChecker(monthDate, currentDate, meal.date)),
+            calendar : meals,
+        };
+
+        console.log("HERE IS THE FLTER SHIT IT SHOULD ADD THAT THING PUT IT DONT");
+        console.log(meals.filter(meal => tools.dateChecker(meal.date, currentDate)));
+
+        console.log("HERE THE ABOUT TO RETUrN THING");
+
+        return res.json({success : mealData});
+    })
+    .catch(err => console.log(err));
+
 })
 
 module.exports = router;
