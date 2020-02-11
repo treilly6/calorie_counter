@@ -13,10 +13,19 @@ import LogIn from './Components/User/LogIn';
 import SignUp from './Components/User/SignUp';
 import { UserContext } from './context/UserContext';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute';
+import MessageBox from './Components/Messages/MessageBox.js';
 
 function App() {
+    // user that is passed to the user context
     const [user, setUser] = useState(null);
+
+    // userId whcih is used as a dependency in the useEffect function below
+    // I did this becasue if an object is used in the dependency the UseEffect
+    // ran in an infinite loop
     const [userId, setUserId] = useState(null);
+
+    // variable to check if the user data was fetched yet
+    // used to prevent render unless data fetched
     const [dataFetched, setDataFetched] = useState(false);
 
     useEffect(() => {

@@ -21,7 +21,7 @@ export default function LandingPage() {
                 <img src={photo3} className="img-lp" />
                 <div className="signup-modal">
                     <div>
-                        <div style={{fontSize : "5em"}}>Track Progress & Take Control of Your Diet</div>
+                        <div style={{fontSize : "5em"}}>Take Control of Your Diet</div>
                     </div>
                 </div>
                 <div className="shader"></div>

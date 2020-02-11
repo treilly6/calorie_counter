@@ -15,8 +15,9 @@
     top : 50%;
     left : 50%;
     transform: translate(-50%, -50%);
-    font-weight: bold;
-    color : #ff8c1a;
+    /* font-weight: bold; */
+    /* color : #ff8c1a; */
+    color : #fff;
     text-align: center;
     z-index: 3;
 }

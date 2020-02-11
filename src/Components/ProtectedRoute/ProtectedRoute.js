@@ -9,9 +9,6 @@ export default function ProtectedRoute({ component : Component, ...rest }) {
 
     const { user, setUser } = useContext(UserContext);
 
-    console.log("HERE ARE THE CONTECT VALUES ");
-    console.log(user);
-
     return (
         <Route {...rest} render={(props) => (
             user
@@ -19,7 +16,7 @@ export default function ProtectedRoute({ component : Component, ...rest }) {
             : <Redirect to={{
                 pathname : "/login",
                 state : {
-                    message : "Error : Must Login to Access Features"
+                    message : "Error : Login Required",
                 }
             }}/>
         )}/>

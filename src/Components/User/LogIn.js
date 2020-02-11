@@ -9,8 +9,16 @@ import MessageBox from '../Messages/MessageBox';
 
 export default function LogIn(props) {
     console.log("HERE ARE THE LOGIN PROPS ", props);
+
+    // set a message varibale which will be assigned to the message text state
+    var message = '';
+    if(props.location.state && props.location.state.message) {
+        message = props.location.state.message;
+    }
+
     const [redirect, setRedirect ] = useState(null);
     const [formState, setFormState ] = useState({username : '', password : ''});
+    const [messageText, setMessageText]= useState(message);
 
     const { user, setUser } = useContext(UserContext);
 
@@ -40,9 +48,8 @@ export default function LogIn(props) {
                     setRedirect(res.data.success.redirect);
                 } else {
                     // user was not authenticated
-                    // want to add in a message state variable that will render a messgage box
-                    // setMessage(res.data.failure.message)
-                    return
+                    // change the messageText varibale
+                    setMessageText(res.data.failure.message)
                 }
             })
             .catch(err => console.log(err));
@@ -58,10 +65,7 @@ export default function LogIn(props) {
             }} />
         )
     } else {
-        var message;
-        if(props.location.state && props.location.state.message) {
-            message = props.location.state.message;
-        }
+
 
         return (
             <div className="form-cont">
@@ -71,7 +75,7 @@ export default function LogIn(props) {
                     </div>
                     <div>
                         <div style={{padding : "0px 10px"}}>
-                            <MessageBox message={message} />
+                            <MessageBox message={messageText} />
                         </div>
                         <form onSubmit={submit}>
                             <div className="all-inputs-cont">
