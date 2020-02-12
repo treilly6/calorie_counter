@@ -103,9 +103,9 @@ router.get('/allData' , (req, res) => {
     console.log(currentDate);
     console.log("END OF THE IMPORTANT STUFF");
 
-    const weekDate = tools.dateChange(currentDate, -7);
-    const twoWeekDate = tools.dateChange(currentDate, -14);
-    const monthDate = tools.dateChange(currentDate, -30);
+    const weekDate = tools.dateChange(currentDate, -6);
+    const twoWeekDate = tools.dateChange(currentDate, -13);
+    const monthDate = tools.dateChange(currentDate, -29);
 
 
     // function that will group the meals by the date they were entered
@@ -230,6 +230,12 @@ router.get('/allData' , (req, res) => {
             month : avgCalories(groupByDate(meals.filter(meal => tools.dateRangeChecker(monthDate, currentDate, meal.date)), monthDict), "Past Month Avg."),
             calendar : meals,
         };
+
+        // get the avaerage for the week
+        const weekAvg = avgCalories(mealData.week, "Avg.");
+
+        // add the week avaergae into the weekly data object
+        mealData.week["avg"] = weekAvg;
 
         return res.json({success : mealData});
     })

@@ -14,5 +14,45 @@
 }
 
 .chart-cont {
-    overflow-x: auto;
+    overflow-x: hidden;
+}
+
+.dotted-line {
+    border : none;
+    border-top: 2px dashed #2eb82e;
+    width: 100%;
+}
+
+.legend-elem-cont {
+    display: flex;
+    justify-content: space-around;
+    max-width: 500px;
+    margin : 0 auto;
+}
+
+.legend-elem {
+    display: flex;
+}
+
+.legend-label {
+    padding-right: 5px;
+}
+
+.box {
+    height : 16px;
+    width: 16px;
+}
+
+.box-green {
+    background-color: #2eb82e;
+}
+
+.box-red {
+    background-color : #b82e2e;
+}
+
+.line-cont {
+    width : 25px;
+    display: flex;
+    align-items: center;
 }
