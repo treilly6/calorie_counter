@@ -107,11 +107,6 @@ router.get('/allData' , (req, res) => {
     const twoWeekDate = tools.dateChange(currentDate, -14);
     const monthDate = tools.dateChange(currentDate, -30);
 
-    console.log("HERE ARE ALL THE DATES ");
-    console.log(currentDate);
-    console.log(weekDate);
-    console.log(twoWeekDate);
-    console.log(monthDate);
 
     // function that will group the meals by the date they were entered
     // used to find the total calories for specific dates
@@ -135,6 +130,30 @@ router.get('/allData' , (req, res) => {
             }
             return map;
         }, intialDict);
+    }
+
+    // takes a date dict and averages the daily calorie intake over the given timeFrame
+    const avgCalories = (dateDict, timeFrame) => {
+        const totalMap = Object.keys(dateDict).reduce((map, dateKey) => {
+            if(dateDict[dateKey].calories > 0) {
+                // add the days calories to the total
+                map.totalCals += dateDict[dateKey].calories;
+                // increment the number of days
+                map.totalDays++;
+            }
+            return map;
+        }, {totalCals : 0, totalDays : 0});
+
+        // if total days is not zero return avg cals
+        if(totalMap.totalDays > 0) {
+            return {
+                date : timeFrame,
+                calories : totalMap.totalCals / totalMap.totalDays,
+            }
+        } else {
+            // return dict with avg at 0
+            return {date : timeFrame, calories : 0};
+        }
     }
 
     const makeDateDict = (startDate, endDate, initParams=[]) => {
@@ -195,12 +214,6 @@ router.get('/allData' , (req, res) => {
     const twoWeekDict = makeDateDict(twoWeekDate, currentDate, [["date", ""],["calories", 0]]);
     const monthDict = makeDateDict(monthDate, currentDate, [["date", ""],["calories", 0]]);
 
-    console.log("HERE ARE ALL THE DICTS");
-    console.log(dayDict);
-    console.log(weekDict);
-    console.log(twoWeekDict);
-    console.log("END OF THE DICTS MAN");
-
     // find all the users meal info
     Meal.find({
         username : username,
@@ -209,23 +222,14 @@ router.get('/allData' , (req, res) => {
         console.log("HERE ARE THE MEALS");
         console.log(meals);
 
-        // make the food Data object which holds the meals based on their mealtype
+        // make the food Data object which holds the meals based on certain time frames and groups by date within each time fram
         const mealData = {
             today : groupByDate(meals.filter(meal => tools.dateChecker(meal.date, currentDate)), dayDict),
             week : groupByDate(meals.filter(meal => tools.dateRangeChecker(weekDate, currentDate, meal.date)), weekDict),
-            twoWeek : groupByDate(meals.filter(meal => tools.dateRangeChecker(twoWeekDate, currentDate, meal.date)), twoWeekDict),
-            month : groupByDate(meals.filter(meal => tools.dateRangeChecker(monthDate, currentDate, meal.date)), monthDict),
+            twoWeek : avgCalories(groupByDate(meals.filter(meal => tools.dateRangeChecker(twoWeekDate, currentDate, meal.date)), twoWeekDict), "2 Week Avg."),
+            month : avgCalories(groupByDate(meals.filter(meal => tools.dateRangeChecker(monthDate, currentDate, meal.date)), monthDict), "Past Month Avg."),
             calendar : meals,
         };
-
-        console.log("HERE IS THE TODAY RESULT IN THE MEAL DATA");
-        console.log(mealData.today);
-
-
-
-        console.log("HERE IS THE TEST MAP CONST");
-
-        console.log("HERE THE ABOUT TO RETUrN THING");
 
         return res.json({success : mealData});
     })
