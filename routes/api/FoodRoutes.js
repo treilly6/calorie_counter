@@ -115,7 +115,7 @@ router.get('/allData' , (req, res) => {
 
     // function that will group the meals by the date they were entered
     // used to find the total calories for specific dates
-    const groupByDate = (mealArray) => {
+    const groupByDate = (mealArray, intialDict) => {
         return mealArray.reduce((map, mealItem) => {
             console.log(mealItem.date);
             console.log(map);
@@ -124,17 +124,82 @@ router.get('/allData' , (req, res) => {
             console.log(tools.convertDateForCharts(mealItem.date));
             const chartDate = tools.convertDateForCharts(mealItem.date);
             if(chartDate in map) {
-                console.log("Key is in the map");
-                map[chartDate].calories += Number(mealItem.calories);
-            } else {
-                console.log("key is not in the map");
-                map[chartDate] = {};
-                map[chartDate].date = chartDate;
-                map[chartDate].calories = Number(mealItem.calories);
+                if(map[chartDate].date && map[chartDate].calories) {
+                    console.log("everything in the map is there");
+                    map[chartDate].calories += Number(mealItem.calories);
+                } else {
+                    console.log("INITIALIZING THE DICT VALUES");
+                    map[chartDate].date = chartDate;
+                    map[chartDate].calories = Number(mealItem.calories);
+                }
             }
             return map;
-        }, {});
+        }, intialDict);
     }
+
+    const makeDateDict = (startDate, endDate, initParams=[]) => {
+        // function returns a dictionary where the keys are all dates between (inclusive) the startDate and the endDate
+        // and the values for those keys are empty dictionaries
+
+        // the initParams argument is optional and if supplied must be a list of lists [[key1, value1], [key2, value2], ...]. Function will add each key value pair to each date key
+
+
+        // init the date Dict that will be returned
+        const dateDict = {};
+
+        // init a sameDay to false for the while loop
+        var sameDay = false;
+
+        // create a copy of the start date
+        var arrayDate = new Date(startDate);
+
+        // while not same Day
+        while(!sameDay) {
+
+            // get the chart date format "mm/dd"
+            var chartDate = tools.convertDateForCharts(arrayDate);
+
+            // add chart date as a key to the dictionary
+            dateDict[chartDate] = {};
+
+            // if initial params were supplied add them to the dateDict[chartDate]
+            if(initParams.length > 0) {
+                for (params of initParams) {
+                    // if date should also be a sub key
+                    if(params[0] === "date") {
+                        // add the chart dict to the date key
+                        dateDict[chartDate]["date"] = chartDate;
+                    } else {
+                        // add the key value pair to the date Dict
+                        dateDict[chartDate][params[0]] = params[1];
+                    }
+                }
+            }
+
+            // if the end date is null or the dates are the same
+            if(endDate === null || tools.dateChecker(arrayDate, endDate)) {
+                // change the same day variable thus breaking out of the whiel loop
+                sameDay = true;
+            } else {
+                // make the array date equal to the next day
+                arrayDate = tools.dateChange(arrayDate, 1);
+            }
+        }
+
+        // return the date dict
+        return dateDict;
+    }
+
+    const dayDict = makeDateDict(currentDate, null, [["date", ""],["calories", 0]]);
+    const weekDict = makeDateDict(weekDate, currentDate, [["date", ""],["calories", 0]]);
+    const twoWeekDict = makeDateDict(twoWeekDate, currentDate, [["date", ""],["calories", 0]]);
+    const monthDict = makeDateDict(monthDate, currentDate, [["date", ""],["calories", 0]]);
+
+    console.log("HERE ARE ALL THE DICTS");
+    console.log(dayDict);
+    console.log(weekDict);
+    console.log(twoWeekDict);
+    console.log("END OF THE DICTS MAN");
 
     // find all the users meal info
     Meal.find({
@@ -146,10 +211,10 @@ router.get('/allData' , (req, res) => {
 
         // make the food Data object which holds the meals based on their mealtype
         const mealData = {
-            today : groupByDate(meals.filter(meal => tools.dateChecker(meal.date, currentDate))),
-            week : groupByDate(meals.filter(meal => tools.dateRangeChecker(weekDate, currentDate, meal.date))),
-            twoWeek : groupByDate(meals.filter(meal => tools.dateRangeChecker(twoWeekDate, currentDate, meal.date))),
-            month : groupByDate(meals.filter(meal => tools.dateRangeChecker(monthDate, currentDate, meal.date))),
+            today : groupByDate(meals.filter(meal => tools.dateChecker(meal.date, currentDate)), dayDict),
+            week : groupByDate(meals.filter(meal => tools.dateRangeChecker(weekDate, currentDate, meal.date)), weekDict),
+            twoWeek : groupByDate(meals.filter(meal => tools.dateRangeChecker(twoWeekDate, currentDate, meal.date)), twoWeekDict),
+            month : groupByDate(meals.filter(meal => tools.dateRangeChecker(monthDate, currentDate, meal.date)), monthDict),
             calendar : meals,
         };
 
