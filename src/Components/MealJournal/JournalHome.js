@@ -20,6 +20,10 @@ export default function JournalHome(props) {
         snacks : [],
     });
 
+    // // state variable that holds cumulative calorie by macor info
+    // // this is passed to the pie chart for rendering
+    // const [calorieData, setCalorieData] = useState([]);
+
 
     // props.location.state will have a redirectDate value when a user saves
     // meal data on the FoodItem.js page and it redirects back to the journalHome
@@ -37,6 +41,11 @@ export default function JournalHome(props) {
     useEffect(() => {
         console.log("USE EFFECT FOR SENDING THE AXIOS TO FOOD ITEMS ")
         console.log("HERET HE JDATE , " , journalDate);
+
+        // if no date return
+        if(journalDate === null) {
+            return
+        }
 
         // want an api call when the date changes to get the proper data for that days meals and calories
         axios.get('/api/foodItems' , {params : {date : journalDate}})
@@ -69,7 +78,7 @@ export default function JournalHome(props) {
         <div className="journal-main-cont">
             <CalendarInput sendDateToParent={getDate} journalDate={journalDate} />
             <CalorieCounter foodData={foodData} />
-            <MacroChart />
+            <MacroChart data={foodData} />
             <MealTable journalDate={journalDate} mealType="Breakfast" foodData={foodData.breakfast} />
             <MealTable journalDate={journalDate} mealType="Lunch" foodData={foodData.lunch} />
             <MealTable journalDate={journalDate} mealType="Dinner" foodData={foodData.dinner} />

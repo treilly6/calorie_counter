@@ -14,7 +14,7 @@ export default function MealTable({ mealType, journalDate, foodData }) {
     // mealType specifies if meal was breakfast, lunch, dinner, or snacks
     // journalDate specifies the date user selected on journalHome.js
 
-    console.log("HERE IS THE MEALTYPE AND THE DATE IN THE MEAL TABLE JS ", mealType, journalDate, foodData, "\n", "\n", "\n", "\n");
+    // console.log("HERE IS THE MEALTYPE AND THE DATE IN THE MEAL TABLE JS ", mealType, journalDate, foodData, "\n", "\n", "\n", "\n");
 
     // if there is food date return the table
     if(foodData.length > 0) {
@@ -87,7 +87,7 @@ export default function MealTable({ mealType, journalDate, foodData }) {
                         <AddFood />
                     </Link>
                 </div>
-            </Paper>            
+            </Paper>
         )
     }
 }
