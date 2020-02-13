@@ -1,5 +1,5 @@
 import 'date-fns';
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardTimePicker, KeyboardDatePicker, } from '@material-ui/pickers';
@@ -7,11 +7,14 @@ import '../../App.css';
 
 export default function MaterialUIPickers({ sendDateToParent, journalDate }) {
 
-    // set the dateObj
-    const dateObj = (journalDate ? new Date(journalDate) : new Date());
+    console.log("HERE IN THE CALENDAR INPUT HERE THE VARS I WANNA KNOW ", journalDate);
 
     // assing the dateObj to the state
-    const [selectedDate, setSelectedDate] = React.useState(dateObj);
+    const [selectedDate, setSelectedDate] = useState(journalDate);
+
+    useEffect(() => {
+        setSelectedDate(journalDate);
+    }, [journalDate])
 
 
     // ge the new date and send it to parent (JounralHome.js)
@@ -22,23 +25,28 @@ export default function MaterialUIPickers({ sendDateToParent, journalDate }) {
         sendDateToParent(date);
     };
 
-    return (
-        <div className="calendar-cont">
-            <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  disableToolbar
-                  variant="inline"
-                  format="MM/dd/yyyy"
-                  margin="normal"
-                  id="date-picker-inline"
-                  label="Choose Date"
-                  value={selectedDate}
-                  onChange={handleDateChange}
-                  KeyboardButtonProps={{
-                    'aria-label': 'change date',
-                  }}
-                />
-            </MuiPickersUtilsProvider>
-        </div>
-    );
+    // if the journal date from the props is null then render nothing
+    if(selectedDate === null) {
+        return null;
+    } else {
+        return (
+            <div className="calendar-cont">
+                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                      disableToolbar
+                      variant="inline"
+                      format="MM/dd/yyyy"
+                      margin="normal"
+                      id="date-picker-inline"
+                      label="Choose Date"
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      KeyboardButtonProps={{
+                        'aria-label': 'change date',
+                      }}
+                    />
+                </MuiPickersUtilsProvider>
+            </div>
+        );
+    }
 }

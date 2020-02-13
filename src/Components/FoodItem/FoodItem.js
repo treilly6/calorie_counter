@@ -59,7 +59,6 @@ export default function FoodItem(props) {
             return
         }
 
-
         // make the food item obj containing all the food data
         // this uses shorthand syntax for object creation where
         // since key and value are the same it can be listed once

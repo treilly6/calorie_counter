@@ -33,7 +33,8 @@ export default function JournalHome(props) {
 
     // inital render set the state for the journal date
     useEffect(() => {
-        console.log("USE EFFECT IN JOURNAL HOME ");
+        console.log("USE EFFECT IN JOURNAL HOME MOUNTING EFFECT");
+        console.log(props);
         const dateObj = (props.location.state && props.location.state.redirectDate ? new Date(props.location.state.redirectDate) : new Date());
         setJournalDate(dateObj);
     }, []);
