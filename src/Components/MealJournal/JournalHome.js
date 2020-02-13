@@ -3,6 +3,7 @@ import CalendarInput from '../Calendar/CalendarInput';
 import APISearch from '../Search/APISearch';
 import MealTable from './MealTypes/MealTable';
 import CalorieCounter from '../CalorieCounter/CalorieCounter';
+import MacroChart from './MacroChart/MacroChart';
 import axios from 'axios';
 import './JournalHome.css';
 
@@ -68,6 +69,7 @@ export default function JournalHome(props) {
         <div className="journal-main-cont">
             <CalendarInput sendDateToParent={getDate} journalDate={journalDate} />
             <CalorieCounter foodData={foodData} />
+            <MacroChart />
             <MealTable journalDate={journalDate} mealType="Breakfast" foodData={foodData.breakfast} />
             <MealTable journalDate={journalDate} mealType="Lunch" foodData={foodData.lunch} />
             <MealTable journalDate={journalDate} mealType="Dinner" foodData={foodData.dinner} />
