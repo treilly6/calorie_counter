@@ -68,13 +68,13 @@ export default function Profile() {
     if(dataFetched) {
         return (
             <div className="profile-cont">
-                <div>{user.username}</div>
+                <div className="profile-header">{user.username}'s Statistics</div>
                 <div className="select-data-header">
-                    <div className="data-header-item" onClick={() => dataClick("today")}>Today</div>
-                    <div className="data-header-item" onClick={() => dataClick("week")}>7D</div>
-                    <div className="data-header-item" onClick={() => dataClick("twoWeek")}>14D</div>
-                    <div className="data-header-item" onClick={() => dataClick("month")}>30D</div>
-                    <div className="data-header-item" onClick={() => dataClick("calendar")}>Calendar</div>
+                    <div className={"data-header-item " + (dataType === "today" ? "selected" : "")} onClick={() => dataClick("today")}>Today</div>
+                    <div className={"data-header-item " + (dataType === "week" ? "selected" : "")} onClick={() => dataClick("week")}>7D</div>
+                    <div className={"data-header-item " + (dataType === "twoWeek" ? "selected" : "")} onClick={() => dataClick("twoWeek")}>14D</div>
+                    <div className={"data-header-item " + (dataType === "month" ? "selected" : "")} onClick={() => dataClick("month")}>30D</div>
+                    <div className={"data-header-item " + (dataType === "calendar" ? "selected" : "")} onClick={() => dataClick("calendar")}>Calendar</div>
                 </div>
                 <DataCharts dataType={dataType} data={selectedData} />
             </div>

@@ -5,12 +5,26 @@
 .select-data-header {
     display: flex;
     justify-content: space-evenly;
+    margin : 7px 0px;
 }
 
 .data-header-item {
-    padding : 5px;
-    border : 1px solid black;
+    padding : 7px;
     cursor: pointer;
+    color : #1a1aff;
+    text-decoration: underline;
+}
+
+.selected {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: rgba(0, 0, 0, .05);
+}
+
+.profile-header {
+    text-align: center;
+    font-size: 1.3em;
+    margin-bottom: 20px;
 }
 
 .chart-cont {

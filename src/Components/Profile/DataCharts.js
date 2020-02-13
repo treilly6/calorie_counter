@@ -68,9 +68,8 @@ export default function DataCharts({ dataType, data }) {
 
     return(
         <div>
-            <div className="">HERE THE DATA CHARTS</div>
             <div className="chart-cont">
-                <ResponsiveContainer width="100%" height={250} >
+                <ResponsiveContainer width="100%" height={300} >
                     <BarChart data={parsedData} margin={{top : 5, right : 5, bottom : 5, left : 0}} >
                         <CartesianGrid strokeDasharray="3 3" />
                         <XAxis dataKey="date" tick={{fontSize : ".75em"}} />
