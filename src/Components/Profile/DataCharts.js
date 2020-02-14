@@ -21,7 +21,7 @@ export default function DataCharts({ dataType, data }) {
         console.log("GOING OT RENDER CALENDAR ", dataType, typeSet, typeSet.has(dataType));
         return (
             <div>
-                <CalendarGraph dataType={dataType} data={data} />
+                <CalendarGraph data={data} />
             </div>
         )
     }

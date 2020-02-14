@@ -55,5 +55,17 @@ module.exports = {
         const day = ('0' + (date.getUTCDate())).slice(-2);
 
         return(`${month}/${day}`)
+    },
+
+    // return a string of 'yyyy/mm/dd' for the nivo chart data
+    convertDateForCalendar : (date) => {
+        console.log("HERE IS THE CALENDAR DATE ", date);
+
+        // get the month and the day of the date object
+        const month = ('0' + (date.getUTCMonth() + 1)).slice(-2);
+        const day = ('0' + (date.getUTCDate())).slice(-2);
+        const year = (date.getUTCFullYear());
+
+        return (`${year}/${month}/${day}`)
     }
 }

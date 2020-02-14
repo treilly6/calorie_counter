@@ -132,6 +132,26 @@ router.get('/allData' , (req, res) => {
         }, intialDict);
     }
 
+    // used to group the data for the calendar
+    // for calendar date must be yyyy/mm/dd format
+    const CalendarGroup = (mealArray) => {
+        return mealArray.reduce((map, mealItem) => {
+            const dateKey = tools.convertDateForCalendar(mealItem.date);
+            if(dateKey in map) {
+                // increment the calories
+                map[dateKey].value += Number(mealItem.calories);
+            } else {
+                // init the obj for the dateKey
+                map[dateKey] = {};
+                // set the date
+                map[dateKey].day = dateKey;
+                // set the calories
+                map[dateKey].value = Number(mealItem.calories);
+            }
+            return map;
+        }, {})
+    }
+
     // takes a date dict and averages the daily calorie intake over the given timeFrame
     const avgCalories = (dateDict, timeFrame) => {
         const totalMap = Object.keys(dateDict).reduce((map, dateKey) => {
@@ -228,7 +248,7 @@ router.get('/allData' , (req, res) => {
             week : groupByDate(meals.filter(meal => tools.dateRangeChecker(weekDate, currentDate, meal.date)), weekDict),
             twoWeek : avgCalories(groupByDate(meals.filter(meal => tools.dateRangeChecker(twoWeekDate, currentDate, meal.date)), twoWeekDict), "2 Week Avg."),
             month : avgCalories(groupByDate(meals.filter(meal => tools.dateRangeChecker(monthDate, currentDate, meal.date)), monthDict), "Past Month Avg."),
-            calendar : meals,
+            calendar : CalendarGroup(meals),
         };
 
         // get the avaerage for the week
