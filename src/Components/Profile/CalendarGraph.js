@@ -1,12 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import { ResponsiveCalendar } from '@nivo/calendar';
 import { UserContext } from '../../context/UserContext';
+import { Redirect } from 'react-router-dom';
 import './Profile.css';
 
 // make sure parent container of ResponsiveCalendar had a defined height,
 // otherwise height will be 0 and no chart will be rendered.
 
 const CalendarGraph = ({ data }) => {
+
+    const [redirect, setRedirect] = useState(false);
+    const [redirectDate, setRedirectDate] = useState(null);
 
     console.log("HERE IST HE CALENDAR DAATA ", data);
 
@@ -21,12 +25,10 @@ const CalendarGraph = ({ data }) => {
         {
             day : "2020-04-20",
             value : 420,
-            color : "green",
         },
         {
             day : "2020-05-20",
             value : 420,
-            color : "red",
         },
     ]
 
@@ -61,11 +63,22 @@ const CalendarGraph = ({ data }) => {
         }
     }
 
+    // handle the click and redirect when a day is clicked
     const handleClick = (data, e) => {
         console.log("HERE IS THE DAY CLICKED ");
         console.log(data);
         console.log("HERE SI THE EVENT");
         console.log(e);
+        if(data.data) {
+            const splitDate = data.data.day.split("-");
+            const redirectDate = new Date(splitDate[0], (splitDate[1] - 1), splitDate[2]);
+            // change the redirectDate and redirect
+            setRedirectDate(redirectDate);
+            setRedirect(true);
+            console.log("HERE IS THE REDIRECT DATE ", redirectDate);
+        } else {
+            return null
+        }
     }
 
     console.log("ABOUT TO RETURN");
@@ -79,42 +92,52 @@ const CalendarGraph = ({ data }) => {
         console.log("WHAT THE FUNSSK");
     }
 
-    // need some kind of date setting here that will only get the past year or something
-
-    return(
-        <div className="calendar-graph-cont">
-            <ResponsiveCalendar
-                data={testData}
-                from="2020-01-02"
-                to="2020-12-31"
-                emptyColor="#eeeeee"
-                colors = {["#2eb82e", "#b82e2e"]}
-                margin={getMargin()}
-                direction={getDirection()}
-                yearSpacing={40}
-                monthBorderColor="#ffffff"
-                dayBorderWidth={2}
-                dayBorderColor="#ffffff"
-                onClick={(data, event) => {
-                    handleClick(data, event);
+    if(redirect) {
+        console.log("Here the redirect shit ");
+        console.log(redirect, redirectDate);
+        return (
+            <Redirect
+                to = {{
+                    pathname : '/journal',
+                    state : { redirectDate }
                 }}
-                legends={[
-                    {
-                        anchor: 'bottom-right',
-                        direction: 'row',
-                        translateY: 36,
-                        itemCount: 4,
-                        itemWidth: 42,
-                        itemHeight: 36,
-                        itemsSpacing: 14,
-                        itemDirection: 'right-to-left'
-                    }
-                ]}
             />
-        </div>
+        )
+    } else {
+        return(
+            <div className="calendar-graph-cont">
+                <ResponsiveCalendar
+                    data={parsedData}
+                    from="2020-01-02"
+                    to="2020-12-31"
+                    emptyColor="#eeeeee"
+                    colors = {["#2eb82e", "#b82e2e"]}
+                    margin={getMargin()}
+                    direction={getDirection()}
+                    yearSpacing={40}
+                    monthBorderColor="#ffffff"
+                    dayBorderWidth={2}
+                    dayBorderColor="#ffffff"
+                    onClick={(data, event) => {
+                        handleClick(data, event);
+                    }}
+                    legends={[
+                        {
+                            anchor: 'bottom-right',
+                            direction: 'row',
+                            translateY: 36,
+                            itemCount: 4,
+                            itemWidth: 42,
+                            itemHeight: 36,
+                            itemsSpacing: 14,
+                            itemDirection: 'right-to-left'
+                        }
+                    ]}
+                />
+            </div>
 
-    )
-
+        )
+    }
 }
 
 
