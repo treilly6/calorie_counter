@@ -53,7 +53,7 @@ const CalendarGraph = ({ data }) => {
     const getMargin = () => {
         // vertical alignment
         if(size.width <= 800) {
-            return { top: 20, right: 5, bottom: 0, left: 20 };
+            return { top: 90, right: 5, bottom: 0, left: 20 };
         // horizontal alignment
         } else {
             return { top: 0, right: 5, bottom: 0, left: 20 };
@@ -67,16 +67,16 @@ const CalendarGraph = ({ data }) => {
         console.log(data);
         console.log("HERE SI THE EVENT");
         console.log(e);
-        // if(data.data) {
-        //     const splitDate = data.data.day.split("-");
-        //     const redirectDate = new Date(splitDate[0], (splitDate[1] - 1), splitDate[2]);
-        //     // change the redirectDate and redirect
-        //     setRedirectDate(redirectDate);
-        //     setRedirect(true);
-        //     console.log("HERE IS THE REDIRECT DATE ", redirectDate);
-        // } else {
-        //     return null
-        // }
+        if(data.data) {
+            const splitDate = data.data.day.split("-");
+            const redirectDate = new Date(splitDate[0], (splitDate[1] - 1), splitDate[2]);
+            // change the redirectDate and redirect
+            setRedirectDate(redirectDate);
+            setRedirect(true);
+            console.log("HERE IS THE REDIRECT DATE ", redirectDate);
+        } else {
+            return null
+        }
     }
 
     console.log("ABOUT TO RETURN");
@@ -100,6 +100,24 @@ const CalendarGraph = ({ data }) => {
     } else {
         return(
             <div className="calendar-graph-cont">
+
+                <div className="absolute-legend">
+                    <div className="legend-elem-cont full-width">
+                        <div className="legend-elem">
+                            <div className="legend-label">Below Goal</div>
+                            <div className="box box-green"></div>
+                        </div>
+                        <div className="legend-elem">
+                            <div className="legend-label">Above Goal</div>
+                            <div className="box box-red"></div>
+                        </div>
+                        <div className="legend-elem">
+                            <div className="legend-label">Goal</div>
+                            <div className="line-cont"><hr className="dotted-line" /></div>
+                        </div>
+                    </div>
+                </div>
+
                 <ResponsiveCalendar
                     data={parsedData}
                     from="2020-01-02"
@@ -127,6 +145,7 @@ const CalendarGraph = ({ data }) => {
                         }
                     ]}
                 />
+
             </div>
 
         )

@@ -73,6 +73,13 @@
 
 .calendar-graph-cont {
     height: 350px;
+    position: relative;
+}
+
+.absolute-legend {
+    position: absolute;
+    width: 100%;
+    top : 30px;
 }
 
 @media(max-width : 800px) {
