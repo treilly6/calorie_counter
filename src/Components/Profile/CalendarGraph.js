@@ -21,24 +21,21 @@ const CalendarGraph = ({ data }) => {
 
     var parsedData = [];
 
-    const testData = [
-        {
-            day : "2020-04-20",
-            value : 420,
-        },
-        {
-            day : "2020-05-20",
-            value : 420,
-        },
-    ]
-
     if(Object.values(data).length > 0) {
         console.log("SETTING THE PARSED DATA")
         parsedData = Object.values(data);
+
+        // set the color for each data object
+        parsedData.forEach((dataObj) => {
+            if(dataObj.value > user.calorieGoal) {
+                dataObj.color = "#ff0000";
+            } else {
+                dataObj.color = "#1aff66";
+            }
+        })
     }
 
     console.log("HERE IS THE PARSED DATA VVVV IMPRITNAT ", parsedData);
-    console.log("HERE THE OTHER DATA TO CHEK THE FORMAT ", testData);
 
     const size = useWindowSize();
 
@@ -63,22 +60,23 @@ const CalendarGraph = ({ data }) => {
         }
     }
 
+
     // handle the click and redirect when a day is clicked
     const handleClick = (data, e) => {
         console.log("HERE IS THE DAY CLICKED ");
         console.log(data);
         console.log("HERE SI THE EVENT");
         console.log(e);
-        if(data.data) {
-            const splitDate = data.data.day.split("-");
-            const redirectDate = new Date(splitDate[0], (splitDate[1] - 1), splitDate[2]);
-            // change the redirectDate and redirect
-            setRedirectDate(redirectDate);
-            setRedirect(true);
-            console.log("HERE IS THE REDIRECT DATE ", redirectDate);
-        } else {
-            return null
-        }
+        // if(data.data) {
+        //     const splitDate = data.data.day.split("-");
+        //     const redirectDate = new Date(splitDate[0], (splitDate[1] - 1), splitDate[2]);
+        //     // change the redirectDate and redirect
+        //     setRedirectDate(redirectDate);
+        //     setRedirect(true);
+        //     console.log("HERE IS THE REDIRECT DATE ", redirectDate);
+        // } else {
+        //     return null
+        // }
     }
 
     console.log("ABOUT TO RETURN");
@@ -86,10 +84,6 @@ const CalendarGraph = ({ data }) => {
     if(data === null) {
         console.log("NULL CALENDAR RENDER");
         return null
-    }
-
-    const colorFunc = () => {
-        console.log("WHAT THE FUNSSK");
     }
 
     if(redirect) {
@@ -111,7 +105,6 @@ const CalendarGraph = ({ data }) => {
                     from="2020-01-02"
                     to="2020-12-31"
                     emptyColor="#eeeeee"
-                    colors = {["#2eb82e", "#b82e2e"]}
                     margin={getMargin()}
                     direction={getDirection()}
                     yearSpacing={40}
