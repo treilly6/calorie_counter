@@ -1,11 +1,16 @@
 import React from 'react';
 import './Footer.css';
 
-export default function Footer() {
+export default function Footer(props) {
 
-    return (
-        <div className="footer">
+    // if on the home page dont render the footer
+    if(window.location.pathname === "/") {
+        return null
+    } else {
+        return (
+            <div className="footer">
 
-        </div>
-    );
+            </div>
+        );
+    }
 }
